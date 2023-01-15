@@ -3,8 +3,8 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Tennis 3D version</title>
-  <meta name="title" content="Tennis SVG Test" />
+  <title>Tabble Tennis 3D version</title>
+  <meta name="title" content="Tabble Tennis SVG Test" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="./js/controller.js"></script>
 </head>
@@ -27,7 +27,7 @@
               width: 100%;
               justify-content: center;
             ">
-    <svg id='svg' width="800" height="425">
+    <svg id='svg' width="800" height="441">
       <filter id="shadow" color-interpolation-filters="sRGB">
         <feDropShadow dx="2" dy="2" stdDeviation="2" flood-opacity="0.7" />
       </filter>
@@ -91,7 +91,7 @@
       </defs>
       <g id='scale' transform='scale(1)'>
         <g id="pitch">
-          <image href="./media/pitch.png" x="0" y="0" width="800" />
+          <image href="./media/table1.png" x="0" y="0" width="800" />
           <!-- <polygon id = "pitch-poly" points="123, 238 677, 238 750, 350 50, 350 " style="fill:red;fill-opacity:0.5;" /> -->
         </g>
         <g id="Ball_Begin">
@@ -99,7 +99,7 @@
           <polygon id="awayKickPolygon" points="500, 500 210, 476 160, 536" style="fill: url(#none);" />
           <ellipse id="ball_shadow" cx="5000" cy="5000" rx="5" ry="5" stroke="none" fill="grey"
             style="fill: grey; fill-opacity: 0.5;" />
-          <image id="ball" href="./media/ball1.png" x="1005" y="2000" width="10" />
+          <image id="ball" href="./media/ball.png" x="1005" y="2000" width="10" />
         </g>
         <g id="Alert_Begin">
           <rect id='stateBoard' x="450" y="508" width="0" height="0" rx="3" ry="3" style="fill:black;" />
@@ -231,24 +231,18 @@
           </g>
         </g>
         <g id="Text Begin">
-          <path d="M 437 15 L 495 15 A 12 12, 0, 0, 1, 495 39 L 437 39 Z" fill="white" fill-opacity='0.3' />
-          <path d="M 363 15 L 305 15 A 12 12, 0, 0, 0, 305 39 L 363 39 Z" fill="white" fill-opacity='0.3' />
-          <rect x="365" y="15" width="70" height="24"
-            style="fill: white;" fill-opacity='0.3' />
-          <text id="setScore" fill="#fff" font-size="18" font-family="InriaSans" x="466" y="33" fill-opacity="1"
+          <path d="M 403 15 L 495 15 A 12 12, 0, 0, 1, 495 39 L 403 39 Z" fill="white" fill-opacity='0.3' />
+          <path d="M 397 15 L 305 15 A 12 12, 0, 0, 0, 305 39 L 397 39 Z" fill="white" fill-opacity='0.3' />
+          <text id="setScore" fill="#fff" font-size="18" font-family="InriaSans" x="450" y="33" fill-opacity="1"
             text-anchor="middle">
             0 - 0
-          </text>
-          <text id="gameCount" fill="#fff" font-size="18" font-family="InriaSans" x="400" y="33" fill-opacity="1"
-            text-anchor="middle">
-            Game 1
           </text>
           <text id="score" fill="#fff" font-size="60" font-family="InriaSans" x="400" y="90" fill-opacity="1"
             text-anchor="middle">
             0-0
           </text>
-          <text id="period" fill="#fff" font-size="18" font-family="InriaSans" x="334" y="33" fill-opacity="1"
-            text-anchor="middle"> 1st Set
+          <text id="period" fill="#fff" font-size="18" font-family="InriaSans" x="350" y="33" fill-opacity="1"
+            text-anchor="middle"> Game 1
           </text>
           <rect id="center_rect" x="255" y="230" width="290" height="110"
             style="fill: black; stroke: grey; stroke-width: 0; stroke-opacity: 0;" fill-opacity='0' />

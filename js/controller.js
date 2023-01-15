@@ -774,7 +774,7 @@ function handleEventData(data) {
     }
     document.getElementById('homeTeamName').textContent = teamNames['home']
     document.getElementById('awayTeamName').textContent = teamNames['away']
-    document.getElementById('period').textContent = capitalizeWords(match['status']['name'].split(" ")).join(' ')
+    document.getElementById('period').textContent = 'Game ' + match['p']
     // Score Setting
     var result = match['result']
     if (result['home']) homeScore = result['home']
@@ -787,6 +787,7 @@ function handleEventData(data) {
         document.getElementById('homeScore1').textContent = match['periods']['p1']['home']
         document.getElementById('awayScore1').textContent = match['periods']['p1']['away']
         gameCount = match['periods']['p1']['home'] + match['periods']['p1']['away'] + 1
+        document.getElementById('setScore').textContent = match['periods']['p1']['home'] + ' - ' + match['periods']['p1']['away']
         currentPeriod = 2
       }
       else {
@@ -797,6 +798,7 @@ function handleEventData(data) {
         document.getElementById('homeScore2').textContent = match['periods']['p2']['home']
         document.getElementById('awayScore2').textContent = match['periods']['p2']['away']
         gameCount = match['periods']['p2']['home'] + match['periods']['p2']['away'] + 1
+        document.getElementById('setScore').textContent = match['periods']['p2']['home'] + ' - ' + match['periods']['p2']['away']
       }
       else {
         document.getElementById('homeScore2').textContent = '-'
@@ -806,10 +808,31 @@ function handleEventData(data) {
         document.getElementById('homeScore3').textContent = match['periods']['p3']['home']
         document.getElementById('awayScore3').textContent = match['periods']['p3']['away']
         gameCount = match['periods']['p3']['home'] + match['periods']['p3']['away'] + 1
+        document.getElementById('setScore').textContent = match['periods']['p3']['home'] + ' - ' + match['periods']['p3']['away']
       }
       else {
         document.getElementById('homeScore3').textContent = '-'
         document.getElementById('awayScore3').textContent = '-'
+      }
+      if (match['periods']['p4']) {
+        document.getElementById('homeScore4').textContent = match['periods']['p4']['home']
+        document.getElementById('awayScore4').textContent = match['periods']['p4']['away']
+        gameCount = match['periods']['p4']['home'] + match['periods']['p4']['away'] + 1
+        document.getElementById('setScore').textContent = match['periods']['p4']['home'] + ' - ' + match['periods']['p4']['away']
+      }
+      else {
+        document.getElementById('homeScore5').textContent = '-'
+        document.getElementById('awayScore5').textContent = '-'
+      }
+      if (match['periods']['p5']) {
+        document.getElementById('homeScore5').textContent = match['periods']['p5']['home']
+        document.getElementById('awayScore5').textContent = match['periods']['p5']['away']
+        gameCount = match['periods']['p5']['home'] + match['periods']['p5']['away'] + 1
+        document.getElementById('setScore').textContent = match['periods']['p5']['home'] + ' - ' + match['periods']['p5']['away']
+      }
+      else {
+        document.getElementById('homeScore5').textContent = '-'
+        document.getElementById('awayScore5').textContent = '-'
       }
       document.getElementById('gameCount').textContent = 'Game ' + gameCount
     }
@@ -937,11 +960,11 @@ function changeScreenSize() {
   screenHeight = window.innerHeight
   screenWidth = window.innerWidth
 
-  scale = min(screenWidth / 800, screenHeight / 425);
+  scale = min(screenWidth / 800, screenHeight / 441);
 
   document.getElementById('scale').setAttribute('transform', 'scale(' + scale + ')')
   document.getElementById('svg').setAttribute('width', 800 * scale)
-  document.getElementById('svg').setAttribute('height', 425 * scale)
+  document.getElementById('svg').setAttribute('height', 441 * scale)
 }
 function min(a, b) {
   if (a > b) return b;
