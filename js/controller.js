@@ -152,6 +152,7 @@ function load() {
 
   const urlParams = new URLSearchParams(window.location.search);
   const eventId = Number(urlParams.get("eventId"));
+  document.getElementById('link').setAttribute('href', '../table-tennis-2d/index.html?eventId=' + eventId)
 
   socket = new WebSocket("wss://gamecast.betdata.pro:8443");
   socket.onopen = function (e) {
@@ -733,22 +734,6 @@ function setSets() {
     document.getElementById("homeScore3").setAttribute("x", 570);
     document.getElementById("awayScore2").setAttribute("x", 490);
     document.getElementById("awayScore3").setAttribute("x", 570);
-  }
-}
-function toggleViewMode(){
-  if(viewMode == 2){
-    viewMode = 3;
-    $("#pitchImage").attr("href", './media/table3d.png')
-    $("#viewMode").text("2D")
-    $("#homeStateG").attr("transform", "translate(50, 380)")
-    $("#awayStateG").attr("transform", "translate(690, 150)")
-  } 
-  else{
-    viewMode = 2;
-    $("#pitchImage").attr("href", './media/table2d.png')
-    $("#viewMode").text("3D")
-    $("#homeStateG").attr("transform", "translate(80, 410)")
-    $("#awayStateG").attr("transform", "translate(720, 170)")
   }
 }
 
