@@ -6,7 +6,7 @@ var currentPeriod
 
 var isLimitedCov = false,
   isperiodscore = false;
-
+var socketLastResponseTime;
 var updated_uts1 = 0,
   updated_uts = 0;
 var currentTime, matchStartDate;
@@ -65,7 +65,7 @@ function countdown() {
     changeScreenSize();
     if (matchStartDate) {
       var seconds = Math.floor((matchStartDate - currentDate.getTime()) / 1000);
-      if(seconds < 0){
+      if (seconds < 0) {
         setCenterFrame(
           "Match about to start"
         );
@@ -100,20 +100,20 @@ function countdown() {
         }
         t += 1 / 101;
         let cs = gameState[currentState];
-        if(cs['type'] == 'periodscore' || cs['type'] == 'starts_serve_period'){
-          if(whoserve() == 0){
-            if(viewMode == 3){
+        if (cs['type'] == 'periodscore' || cs['type'] == 'starts_serve_period') {
+          if (whoserve() == 0) {
+            if (viewMode == 3) {
               bounceBall(60, 340)
             }
-            if(viewMode == 2){
+            if (viewMode == 2) {
               bounceBall(100, 380)
             }
           }
-          if(whoserve() == 1){
-            if(viewMode == 3){
+          if (whoserve() == 1) {
+            if (viewMode == 3) {
               bounceBall(680, 190)
             }
-            if(viewMode == 2){
+            if (viewMode == 2) {
               bounceBall(700, 205)
             }
           }
@@ -124,7 +124,7 @@ function countdown() {
       }
       setP();
     }
-    
+
   }, timeInterval);
 }
 function load() {
@@ -200,13 +200,13 @@ function bounceBall(bx, by) {
       "ry",
       ballRadius * (2 * (tt - 0.5) * (tt - 0.5) + 0.5) * 0.5
     );
-  if(viewMode == 3){
+  if (viewMode == 3) {
     document
-    .getElementById("ball_shadow")
-    .setAttribute(
-      "ry",
-      ballRadius * (2 * (tt - 0.5) * (tt - 0.5) + 0.5) * 0.5 * 0.5
-    );
+      .getElementById("ball_shadow")
+      .setAttribute(
+        "ry",
+        ballRadius * (2 * (tt - 0.5) * (tt - 0.5) + 0.5) * 0.5 * 0.5
+      );
   }
 }
 function serve_fault() {
@@ -283,57 +283,57 @@ function stepInitialize() {
       $("#awayStateG").attr('display', 'block');
       serveTeam = cs['team'];
       if (cs['team'] == 'home') {
-          x_b = mapX(-pitchX / 2 - 20, hp * 1)
-          y_b = mapY(-pitchX / 2 - 20, hp * 1)
-        }
-        else {
-          x_b = mapX(pitchX / 2 + 20, hp * 0)
-          y_b = mapY(pitchX / 2 + 20, hp * 0)
-        }
-        x1 = - w1 - 20;
-        x2 = - w1 - 20;
-        y1 = hp * 1;
-        y2 = hp * 1;
-        x_1_1 = mapX(x1, y1)
-        y_1_1 = mapY(x1, y1)
-        x_1_2 = mapX(x2, y2)
-        y_1_2 = mapY(x2, y2)
-        for(let i = 0; i < 100; i ++){
-          ballInPlayX[i] = Math.random();
-          ballInPlayY[i] = Math.random();
-        }
+        x_b = mapX(-pitchX / 2 - 20, hp * 1)
+        y_b = mapY(-pitchX / 2 - 20, hp * 1)
       }
+      else {
+        x_b = mapX(pitchX / 2 + 20, hp * 0)
+        y_b = mapY(pitchX / 2 + 20, hp * 0)
+      }
+      x1 = - w1 - 20;
+      x2 = - w1 - 20;
+      y1 = hp * 1;
+      y2 = hp * 1;
+      x_1_1 = mapX(x1, y1)
+      y_1_1 = mapY(x1, y1)
+      x_1_2 = mapX(x2, y2)
+      y_1_2 = mapY(x2, y2)
+      for (let i = 0; i < 100; i++) {
+        ballInPlayX[i] = Math.random();
+        ballInPlayY[i] = Math.random();
+      }
+    }
     if (cs['type'] == "periodscore") {
-    $("#homeStateG").attr('display', 'block');
-    $("#awayStateG").attr('display', 'block');
+      $("#homeStateG").attr('display', 'block');
+      $("#awayStateG").attr('display', 'block');
       setCenterFrame("Game Won", teamNames[cs["team"]]);
       serveTeam = cs['team'];
       if (cs['team'] == 'home') {
-          x_b = mapX(-pitchX / 2, hp * 1)
-          y_b = mapY(-pitchX / 2, hp * 1)
-          x1 = - w1;
-          x2 = - w1;
-        }
-        else {
-          x_b = mapX(pitchX / 2, hp * 1)
-          y_b = mapY(pitchX / 2, hp * 1)
-          x1 = w1;
-          x2 = w1;
-        }
-        y1 = hp * 1;
-        y2 = hp * 1;
-        x_1_1 = mapX(x1, y1)
-        y_1_1 = mapY(x1, y1)
-        x_1_2 = mapX(x2, y2)
-        y_1_2 = mapY(x2, y2)
-        for(let i = 0; i < 100; i ++){
-          ballInPlayX[i] = Math.random();
-          ballInPlayY[i] = Math.random();
-        }
+        x_b = mapX(-pitchX / 2, hp * 1)
+        y_b = mapY(-pitchX / 2, hp * 1)
+        x1 = - w1;
+        x2 = - w1;
       }
+      else {
+        x_b = mapX(pitchX / 2, hp * 1)
+        y_b = mapY(pitchX / 2, hp * 1)
+        x1 = w1;
+        x2 = w1;
+      }
+      y1 = hp * 1;
+      y2 = hp * 1;
+      x_1_1 = mapX(x1, y1)
+      y_1_1 = mapY(x1, y1)
+      x_1_2 = mapX(x2, y2)
+      y_1_2 = mapY(x2, y2)
+      for (let i = 0; i < 100; i++) {
+        ballInPlayX[i] = Math.random();
+        ballInPlayY[i] = Math.random();
+      }
+    }
     else if (gameState[currentState]['type'] == 'ball_in_play') {
-    $("#homeStateG").attr('display', 'block');
-    $("#awayStateG").attr('display', 'block');
+      $("#homeStateG").attr('display', 'block');
+      $("#awayStateG").attr('display', 'block');
       x1 = - w1 * 10000;
       x2 = - w1 * 10000;
       y1 = hp * 1;
@@ -363,8 +363,8 @@ function stepInitialize() {
       x_1_2 = mapX(x2, y2)
       y_1_2 = mapY(x2, y2)
       setCenterFrame(gameState[currentState]['name'], teamNames[gameState[currentState]['team']])
-      if(!gameState[currentState]['team'])setCenterFrame(gameState[currentState]['name'], '')
-      if(gameState[currentState]['name'] == 'Ball in play'){
+      if (!gameState[currentState]['team']) setCenterFrame(gameState[currentState]['name'], '')
+      if (gameState[currentState]['name'] == 'Ball in play') {
         setCenterFrame(gameState[currentState]['name'], '')
       }
     }
@@ -408,7 +408,7 @@ function stepInitialize() {
         y_1_2 = mapY(x2, y2)
       }
     }
-    else if(gameState[currentState]['type'] == "periodscore"){}
+    else if (gameState[currentState]['type'] == "periodscore") { }
     else {
       x1 = 1000 * w1;
       x2 = 1000 * w1;
@@ -419,10 +419,10 @@ function stepInitialize() {
       x_1_2 = mapX(x2, y2)
       y_1_2 = mapY(x2, y2)
       setCenterFrame(gameState[currentState]['name'], teamNames[gameState[currentState]['team']])
-      if(gameState[currentState]['name'] == 'Ball in play'){
+      if (gameState[currentState]['name'] == 'Ball in play') {
         setCenterFrame(gameState[currentState]['name'], '')
       }
-      if(gameState[currentState]['type'] == "periodscore"){
+      if (gameState[currentState]['type'] == "periodscore") {
         setCenterFrame("Game Won", teamNames[gameState[currentState]['team']])
       }
     }
@@ -931,13 +931,13 @@ function handleEventData(data) {
       var matchDate = match["_dt"]["date"].split("/");
       var date = new Date(
         matchDate[1] +
-          "/" +
-          matchDate[0] +
-          "/20" +
-          matchDate[2] +
-          " " +
-          match["_dt"]["time"] +
-          ":00 UTC"
+        "/" +
+        matchDate[0] +
+        "/20" +
+        matchDate[2] +
+        " " +
+        match["_dt"]["time"] +
+        ":00 UTC"
       );
 
       matchStartDate = date.getTime();
@@ -1079,8 +1079,8 @@ function min(a, b) {
   if (a > b) return b;
   return a;
 }
-function setP(){
-  if(!match)return;
+function setP() {
+  if (!match) return;
   if (match["p"] == 1) {
     $("#homeStateG").css('display', 'block');
     $("#awayStateG").css('display', 'block');
@@ -1103,261 +1103,261 @@ function setP(){
   }
   if (match["p"] == 31) {
     setTimer = false;
-      $("#period").text("Break");
+    $("#period").text("Break");
     setCenterFrame("Break", homeScore + " - " + awayScore);
     $("#homeStateG").css('display', 'none');
     $("#awayStateG").css('display', 'none');
   }
   if (match["p"] == 32) {
     setTimer = false;
-      $("#period").text("Break");
+    $("#period").text("Break");
     setCenterFrame("Halftime", homeScore + " - " + awayScore);
     $("#homeStateG").css('display', 'none');
     $("#awayStateG").css('display', 'none');
   }
   if (match["p"] == 33) {
     setTimer = false;
-      $("#period").text("Break");
+    $("#period").text("Break");
     setCenterFrame("Break", homeScore + " - " + awayScore);
     $("#homeStateG").css('display', 'none');
     $("#awayStateG").css('display', 'none');
   }
   if (match["p"] == 34) {
     setTimer = false;
-      $("#period").text("Break");
+    $("#period").text("Break");
     setCenterFrame("Break", homeScore + " - " + awayScore);
     $("#homeStateG").css('display', 'none');
     $("#awayStateG").css('display', 'none');
   }
-  
-    if (match["status"]["name"] == "Interrupted") {
-      isLimitedCov = true;
-    } else isLimitedCov = false;
-    // if(match['type'] == 'periodscore' ){
-    //   isperiodscore = true
-    // }
-    // else isperiodscore = false
-    bestofsets = match["bestofsets"];
-    setSets();
-    var teams = match["teams"];
-    periodlength = match["periodlength"];
-    var hometeam = teams["home"];
-    if (hometeam["name"]) hometeamname = hometeam["name"];
-    var awayteam = teams["away"];
-    if (awayteam["name"]) awayteamname = awayteam["name"];
-    teamNames["home"] = hometeamname;
-    teamNames["away"] = awayteamname;
-    // hometeamname = 'This team name is longer than 19 characters'
 
-    document.getElementById("homeStateN").textContent = teamNames["home"];
-    document.getElementById("awayStateN").textContent = teamNames["away"];
-    if (teamNames["home"].indexOf("/") > -1) {
-      let homeName = teamNames["home"].split("/");
-      document.getElementById("homeStateN").textContent = homeName[0];
-      document.getElementById("homeStateN1").textContent = homeName[1];
-      document.getElementById("homeStateLine").setAttribute("y2", 27);
+  if (match["status"]["name"] == "Interrupted") {
+    isLimitedCov = true;
+  } else isLimitedCov = false;
+  // if(match['type'] == 'periodscore' ){
+  //   isperiodscore = true
+  // }
+  // else isperiodscore = false
+  bestofsets = match["bestofsets"];
+  setSets();
+  var teams = match["teams"];
+  periodlength = match["periodlength"];
+  var hometeam = teams["home"];
+  if (hometeam["name"]) hometeamname = hometeam["name"];
+  var awayteam = teams["away"];
+  if (awayteam["name"]) awayteamname = awayteam["name"];
+  teamNames["home"] = hometeamname;
+  teamNames["away"] = awayteamname;
+  // hometeamname = 'This team name is longer than 19 characters'
 
-      let awayName = teamNames["away"].split("/");
-      document.getElementById("awayStateN").textContent = awayName[0];
-      document.getElementById("awayStateN1").textContent = awayName[1];
-      document.getElementById("awayStateLine").setAttribute("y2", 27);
-    }
-    if (hometeamname.length > 19) {
-      teamNames["home"] = hometeamname.substr(0, 17) + "...";
-    }
-    if (awayteamname.length > 19) {
-      teamNames["away"] = awayteamname.substr(0, 17) + "...";
-    }
-    document.getElementById("homeTeamName").textContent = teamNames["home"];
-    document.getElementById("awayTeamName").textContent = teamNames["away"];
-    document.getElementById("period").textContent = "Game " + match["p"];
-    // Score Setting
-    var result = match["result"];
-    if (result["home"]) homeScore = result["home"];
-    if (result["away"]) awayScore = result["away"];
-    document.getElementById("setScore").textContent =
-      homeScore + " - " + awayScore;
-    // Period Score Setting
-    currentPeriod = 0;
-    if (match["periods"] != null) {
-      if (match["periods"]["p1"]) {
-        document.getElementById("homeScore1").textContent =
-          match["periods"]["p1"]["home"];
-        document.getElementById("awayScore1").textContent =
-          match["periods"]["p1"]["away"];
-        gameCount =
-          match["periods"]["p1"]["home"] + match["periods"]["p1"]["away"];
-        currentPeriod = 1;
-        $("#score").text(match["periods"]["p1"]["home"] + '-' + match["periods"]["p1"]["away"])
-      } else {
-        document.getElementById("homeScore1").textContent = "-";
-        document.getElementById("awayScore1").textContent = "-";
-      }
-      if (match["periods"]["p2"]) {
-        document.getElementById("homeScore2").textContent =
-          match["periods"]["p2"]["home"];
-        document.getElementById("awayScore2").textContent =
-          match["periods"]["p2"]["away"];
-        gameCount =
-          match["periods"]["p2"]["home"] + match["periods"]["p2"]["away"];
-        $("#score").text(match["periods"]["p2"]["home"] + '-' + match["periods"]["p2"]["away"])
-        currentPeriod = 2;
-      } else {
-        document.getElementById("homeScore2").textContent = "-";
-        document.getElementById("awayScore2").textContent = "-";
-      }
-      if (match["periods"]["p3"]) {
-        currentPeriod = 3;
-        document.getElementById("homeScore3").textContent =
-          match["periods"]["p3"]["home"];
-        document.getElementById("awayScore3").textContent =
-          match["periods"]["p3"]["away"];
-        gameCount =
-          match["periods"]["p3"]["home"] + match["periods"]["p3"]["away"];
-        $("#score").text(match["periods"]["p3"]["home"] + '-' + match["periods"]["p3"]["away"])
-      } else {
-        document.getElementById("homeScore3").textContent = "-";
-        document.getElementById("awayScore3").textContent = "-";
-      }
-      if (match["periods"]["p4"]) {
-        currentPeriod = 4;
-        document.getElementById("homeScore4").textContent =
-          match["periods"]["p4"]["home"];
-        document.getElementById("awayScore4").textContent =
-          match["periods"]["p4"]["away"];
-        gameCount =
-          match["periods"]["p4"]["home"] + match["periods"]["p4"]["away"];
-        $("#score").text(match["periods"]["p4"]["home"] + '-' + match["periods"]["p4"]["away"])
-      } else {
-        document.getElementById("homeScore4").textContent = "-";
-        document.getElementById("awayScore4").textContent = "-";
-      }
-      if (match["periods"]["p5"]) {
-        currentPeriod = 5;
-        document.getElementById("homeScore5").textContent =
-          match["periods"]["p5"]["home"];
-        document.getElementById("awayScore5").textContent =
-          match["periods"]["p5"]["away"];
-        gameCount =
-          match["periods"]["p5"]["home"] + match["periods"]["p5"]["away"];
-        $("#score").text(match["periods"]["p5"]["home"] + '-' + match["periods"]["p5"]["away"])
-      } else {
-        document.getElementById("homeScore5").textContent = "-";
-        document.getElementById("awayScore5").textContent = "-";
-      }
+  document.getElementById("homeStateN").textContent = teamNames["home"];
+  document.getElementById("awayStateN").textContent = teamNames["away"];
+  if (teamNames["home"].indexOf("/") > -1) {
+    let homeName = teamNames["home"].split("/");
+    document.getElementById("homeStateN").textContent = homeName[0];
+    document.getElementById("homeStateN1").textContent = homeName[1];
+    document.getElementById("homeStateLine").setAttribute("y2", 27);
+
+    let awayName = teamNames["away"].split("/");
+    document.getElementById("awayStateN").textContent = awayName[0];
+    document.getElementById("awayStateN1").textContent = awayName[1];
+    document.getElementById("awayStateLine").setAttribute("y2", 27);
+  }
+  if (hometeamname.length > 19) {
+    teamNames["home"] = hometeamname.substr(0, 17) + "...";
+  }
+  if (awayteamname.length > 19) {
+    teamNames["away"] = awayteamname.substr(0, 17) + "...";
+  }
+  document.getElementById("homeTeamName").textContent = teamNames["home"];
+  document.getElementById("awayTeamName").textContent = teamNames["away"];
+  document.getElementById("period").textContent = "Game " + match["p"];
+  // Score Setting
+  var result = match["result"];
+  if (result["home"]) homeScore = result["home"];
+  if (result["away"]) awayScore = result["away"];
+  document.getElementById("setScore").textContent =
+    homeScore + " - " + awayScore;
+  // Period Score Setting
+  currentPeriod = 0;
+  if (match["periods"] != null) {
+    if (match["periods"]["p1"]) {
+      document.getElementById("homeScore1").textContent =
+        match["periods"]["p1"]["home"];
+      document.getElementById("awayScore1").textContent =
+        match["periods"]["p1"]["away"];
+      gameCount =
+        match["periods"]["p1"]["home"] + match["periods"]["p1"]["away"];
+      currentPeriod = 1;
+      $("#score").text(match["periods"]["p1"]["home"] + '-' + match["periods"]["p1"]["away"])
     } else {
       document.getElementById("homeScore1").textContent = "-";
       document.getElementById("awayScore1").textContent = "-";
     }
-
-    // match['numberofperiods'] == 2
-    if (match["numberofperiods"] == 2) {
-      document.getElementById("homeScore3").style.display = "none";
-      document.getElementById("awayScore3").style.display = "none";
-
-      document.getElementById("tableName1").textContent = "1 HALF";
-      document.getElementById("tableName2").textContent = "2 HALF";
-      document.getElementById("tableName3").style.display = "none";
+    if (match["periods"]["p2"]) {
+      document.getElementById("homeScore2").textContent =
+        match["periods"]["p2"]["home"];
+      document.getElementById("awayScore2").textContent =
+        match["periods"]["p2"]["away"];
+      gameCount =
+        match["periods"]["p2"]["home"] + match["periods"]["p2"]["away"];
+      $("#score").text(match["periods"]["p2"]["home"] + '-' + match["periods"]["p2"]["away"])
+      currentPeriod = 2;
     } else {
-      document.getElementById("homeScore3").style.display = "block";
-      document.getElementById("awayScore3").style.display = "block";
+      document.getElementById("homeScore2").textContent = "-";
+      document.getElementById("awayScore2").textContent = "-";
+    }
+    if (match["periods"]["p3"]) {
+      currentPeriod = 3;
+      document.getElementById("homeScore3").textContent =
+        match["periods"]["p3"]["home"];
+      document.getElementById("awayScore3").textContent =
+        match["periods"]["p3"]["away"];
+      gameCount =
+        match["periods"]["p3"]["home"] + match["periods"]["p3"]["away"];
+      $("#score").text(match["periods"]["p3"]["home"] + '-' + match["periods"]["p3"]["away"])
+    } else {
+      document.getElementById("homeScore3").textContent = "-";
+      document.getElementById("awayScore3").textContent = "-";
+    }
+    if (match["periods"]["p4"]) {
+      currentPeriod = 4;
+      document.getElementById("homeScore4").textContent =
+        match["periods"]["p4"]["home"];
+      document.getElementById("awayScore4").textContent =
+        match["periods"]["p4"]["away"];
+      gameCount =
+        match["periods"]["p4"]["home"] + match["periods"]["p4"]["away"];
+      $("#score").text(match["periods"]["p4"]["home"] + '-' + match["periods"]["p4"]["away"])
+    } else {
+      document.getElementById("homeScore4").textContent = "-";
+      document.getElementById("awayScore4").textContent = "-";
+    }
+    if (match["periods"]["p5"]) {
+      currentPeriod = 5;
+      document.getElementById("homeScore5").textContent =
+        match["periods"]["p5"]["home"];
+      document.getElementById("awayScore5").textContent =
+        match["periods"]["p5"]["away"];
+      gameCount =
+        match["periods"]["p5"]["home"] + match["periods"]["p5"]["away"];
+      $("#score").text(match["periods"]["p5"]["home"] + '-' + match["periods"]["p5"]["away"])
+    } else {
+      document.getElementById("homeScore5").textContent = "-";
+      document.getElementById("awayScore5").textContent = "-";
+    }
+  } else {
+    document.getElementById("homeScore1").textContent = "-";
+    document.getElementById("awayScore1").textContent = "-";
+  }
 
-      document.getElementById("tableName1").textContent = "Game 1";
-      document.getElementById("tableName2").textContent = "Game 2";
-      document.getElementById("tableName3").textContent = "Game 3";
-      document.getElementById("tableName3").style.display = "block";
-    }
+  // match['numberofperiods'] == 2
+  if (match["numberofperiods"] == 2) {
+    document.getElementById("homeScore3").style.display = "none";
+    document.getElementById("awayScore3").style.display = "none";
 
-    if (match["status"]["name"] == "Ended") {
-      //Match End
-      $("#period").text("Ended");
-      setCenterFrame("Match End", homeScore + " : " + awayScore);
-      $("#homeStateG").css('display', 'none');
-      $("#awayStateG").css('display', 'none');
-    }
-    if (match["status"]["name"] == "Break") {
-      //Break time
-      setCenterFrame("Break", homeScore + " : " + awayScore);
-      $("#homeStateG").css('display', 'none');
-      $("#awayStateG").css('display', 'none');
-    }
+    document.getElementById("tableName1").textContent = "1 HALF";
+    document.getElementById("tableName2").textContent = "2 HALF";
+    document.getElementById("tableName3").style.display = "none";
+  } else {
+    document.getElementById("homeScore3").style.display = "block";
+    document.getElementById("awayScore3").style.display = "block";
 
-    if (match["status"]["name"] == "Not started") {
-      $("#period").text("Not Started");
-      $("#homeStateG").css('display', 'none');
-      $("#awayStateG").css('display', 'none');
-      const currentDate = new Date();
-      //Match End
-      upCommingTime = currentDate.getTime() / 1000 - match["updated_uts"];
-      // var seconds = Math.floor(updated_uts / 1000)
-      var seconds = Math.floor(upCommingTime);
-      var minute = Math.floor(seconds / 60);
-      var second = seconds % 60;
-      // var date = new Date(match['_dt']['date'] + '4:52:48 PM UTC');
-      var matchDate = match["_dt"]["date"].split("/");
-      var date = new Date(
-        matchDate[1] +
-          "/" +
-          matchDate[0] +
-          "/20" +
-          matchDate[2] +
-          " " +
-          match["_dt"]["time"] +
-          ":00 UTC"
-      );
+    document.getElementById("tableName1").textContent = "Game 1";
+    document.getElementById("tableName2").textContent = "Game 2";
+    document.getElementById("tableName3").textContent = "Game 3";
+    document.getElementById("tableName3").style.display = "block";
+  }
 
-      matchStartDate = date.getTime();
-    }
+  if (match["status"]["name"] == "Ended") {
+    //Match End
+    $("#period").text("Ended");
+    setCenterFrame("Match End", homeScore + " : " + awayScore);
+    $("#homeStateG").css('display', 'none');
+    $("#awayStateG").css('display', 'none');
+  }
+  if (match["status"]["name"] == "Break") {
+    //Break time
+    setCenterFrame("Break", homeScore + " : " + awayScore);
+    $("#homeStateG").css('display', 'none');
+    $("#awayStateG").css('display', 'none');
+  }
 
-    if (match["p"] == 1) {
-      $("#homeStateG").css('display', 'block');
-      $("#awayStateG").css('display', 'block');
-    }
-    if (match["p"] == 2) {
-      $("#homeStateG").css('display', 'block');
-      $("#awayStateG").css('display', 'block');
-    }
-    if (match["p"] == 3) {
-      $("#homeStateG").css('display', 'block');
-      $("#awayStateG").css('display', 'block');
-    }
-    if (match["p"] == 4) {
-      $("#homeStateG").css('display', 'block');
-      $("#awayStateG").css('display', 'block');
-    }
-    if (match["p"] == 5) {
-      $("#homeStateG").css('display', 'block');
-      $("#awayStateG").css('display', 'block');
-    }
-    if (match["p"] == 31) {
-      setTimer = false;
-      $("#period").text("Break");
-      setCenterFrame("Break", homeScore + " - " + awayScore);
-      $("#homeStateG").css('display', 'none');
-      $("#awayStateG").css('display', 'none');
-    }
-    if (match["p"] == 32) {
-      setTimer = false;
-      $("#period").text("Break");
-      setCenterFrame("Halftime", homeScore + " - " + awayScore);
-      $("#homeStateG").css('display', 'none');
-      $("#awayStateG").css('display', 'none');
-    }
-    if (match["p"] == 33) {
-      setTimer = false;
-      $("#period").text("Break");
-      setCenterFrame("Break", homeScore + " - " + awayScore);
-      $("#homeStateG").css('display', 'none');
-      $("#awayStateG").css('display', 'none');
-    }
-    if (match["p"] == 34) {
-      setTimer = false;
-      $("#period").text("Break");
-      setCenterFrame("Break", homeScore + " - " + awayScore);
-      $("#homeStateG").css('display', 'none');
-      $("#awayStateG").css('display', 'none');
-    }
-  
+  if (match["status"]["name"] == "Not started") {
+    $("#period").text("Not Started");
+    $("#homeStateG").css('display', 'none');
+    $("#awayStateG").css('display', 'none');
+    const currentDate = new Date();
+    //Match End
+    upCommingTime = currentDate.getTime() / 1000 - match["updated_uts"];
+    // var seconds = Math.floor(updated_uts / 1000)
+    var seconds = Math.floor(upCommingTime);
+    var minute = Math.floor(seconds / 60);
+    var second = seconds % 60;
+    // var date = new Date(match['_dt']['date'] + '4:52:48 PM UTC');
+    var matchDate = match["_dt"]["date"].split("/");
+    var date = new Date(
+      matchDate[1] +
+      "/" +
+      matchDate[0] +
+      "/20" +
+      matchDate[2] +
+      " " +
+      match["_dt"]["time"] +
+      ":00 UTC"
+    );
+
+    matchStartDate = date.getTime();
+  }
+
+  if (match["p"] == 1) {
+    $("#homeStateG").css('display', 'block');
+    $("#awayStateG").css('display', 'block');
+  }
+  if (match["p"] == 2) {
+    $("#homeStateG").css('display', 'block');
+    $("#awayStateG").css('display', 'block');
+  }
+  if (match["p"] == 3) {
+    $("#homeStateG").css('display', 'block');
+    $("#awayStateG").css('display', 'block');
+  }
+  if (match["p"] == 4) {
+    $("#homeStateG").css('display', 'block');
+    $("#awayStateG").css('display', 'block');
+  }
+  if (match["p"] == 5) {
+    $("#homeStateG").css('display', 'block');
+    $("#awayStateG").css('display', 'block');
+  }
+  if (match["p"] == 31) {
+    setTimer = false;
+    $("#period").text("Break");
+    setCenterFrame("Break", homeScore + " - " + awayScore);
+    $("#homeStateG").css('display', 'none');
+    $("#awayStateG").css('display', 'none');
+  }
+  if (match["p"] == 32) {
+    setTimer = false;
+    $("#period").text("Break");
+    setCenterFrame("Halftime", homeScore + " - " + awayScore);
+    $("#homeStateG").css('display', 'none');
+    $("#awayStateG").css('display', 'none');
+  }
+  if (match["p"] == 33) {
+    setTimer = false;
+    $("#period").text("Break");
+    setCenterFrame("Break", homeScore + " - " + awayScore);
+    $("#homeStateG").css('display', 'none');
+    $("#awayStateG").css('display', 'none');
+  }
+  if (match["p"] == 34) {
+    setTimer = false;
+    $("#period").text("Break");
+    setCenterFrame("Break", homeScore + " - " + awayScore);
+    $("#homeStateG").css('display', 'none');
+    $("#awayStateG").css('display', 'none');
+  }
+
 }
 function whoserve() {
   // ((homescore + awayscore) / 2 + gameperiod) % 2 == 1 home
